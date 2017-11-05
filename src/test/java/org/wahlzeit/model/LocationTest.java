@@ -23,5 +23,10 @@ public class LocationTest {
 		assertFalse(locOnes.equals(locZeros));
 		assertFalse(locZeros.equals(null));
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testMethodsExpectIllegalArgumentException() {
+		Location l = new Location(null);
+	}
 
 }

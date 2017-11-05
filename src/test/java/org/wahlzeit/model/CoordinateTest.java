@@ -1,6 +1,8 @@
 package org.wahlzeit.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +38,8 @@ public class CoordinateTest {
 		assertFalse(zeros.isEqual(new Coordinate(0, 0, 1e-3)));
 		assertFalse(zeros.isEqual(ones));
 		assertTrue(ones.isEqual(new Coordinate(1, 1, 1)));
+		
+		assertFalse(zeros.isEqual(null));
 	}
 	
 	@Test
@@ -46,6 +50,14 @@ public class CoordinateTest {
 		assertFalse(zeros.equals(ones));
 		assertFalse(zeros.equals(null));
 		assertTrue(ones.equals(new Coordinate(1, 1, 1)));
+		
+		assertFalse(zeros.equals(null));
+		assertFalse(zeros.equals(new Object()));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testMethodsExpectIllegalArgumentException() {
+		zeros.getDistance(null);
 	}
 
 }
