@@ -24,6 +24,8 @@ import java.util.logging.Logger;
  * A photo manager provides access to and manages photos.
  */
 public class MountainPhotoManager extends PhotoManager {
+	
+	//protected static final MountainPhotoManager instance = new MountainPhotoManager();
 
 	/**
 	 *
@@ -54,74 +56,6 @@ public class MountainPhotoManager extends PhotoManager {
 			}
 		}
 
-		return result;
-	}
-
-	/**
-	 * @methodtype command
-	 *
-	 * Load all persisted photos. Executed when Wahlzeit is restarted.
-	 */
-	public void loadPhotos() {
-		Collection<MountainPhoto> existingPhotos = ObjectifyService.run(new Work<Collection<MountainPhoto>>() {
-			@Override
-			public Collection<MountainPhoto> run() {
-				Collection<MountainPhoto> existingPhotos = new ArrayList<MountainPhoto>();
-				readObjects(existingPhotos, MountainPhoto.class);
-				return existingPhotos;
-			}
-		});
-
-		for (Photo photo : existingPhotos) {
-			if (!doHasPhoto(photo.getId())) {
-				log.config(LogBuilder.createSystemMessage().
-						addParameter("Load MountainPhoto with ID", photo.getIdAsString()).toString());
-				loadScaledImages(photo);
-				doAddPhoto(photo);
-			} else {
-				log.config(LogBuilder.createSystemMessage().
-						addParameter("Already loaded MountainPhoto", photo.getIdAsString()).toString());
-			}
-		}
-
-		log.info(LogBuilder.createSystemMessage().addMessage("All photos loaded.").toString());
-	}
-
-	@Override
-	protected void updateDependents(Persistent obj) {
-		if (obj instanceof MountainPhoto) {
-			MountainPhoto photo = (MountainPhoto) obj;
-			saveScaledImages(photo);
-			updateTags(photo);
-			UserManager userManager = UserManager.getInstance();
-			Client owner = userManager.getClientById(photo.getOwnerId());
-			userManager.saveClient(owner);
-		}
-	}
-
-	/**
-	 * query
-	 */
-	public Set<MountainPhoto> findMountainPhotosByOwner(String ownerName) {
-		Set<MountainPhoto> result = new HashSet<MountainPhoto>();
-		readObjects(result, MountainPhoto.class, MountainPhoto.OWNER_ID, ownerName);
-
-		for (Iterator<MountainPhoto> i = result.iterator(); i.hasNext(); ) {
-			doAddPhoto(i.next());
-		}
-
-		return result;
-	}
-
-
-
-	/**
-	 * @methodtype factory
-	 */
-	public Photo createPhoto(String filename, Image uploadedImage) throws Exception {
-		PhotoId id = PhotoId.getNextId();
-		Photo result = PhotoUtil.createPhoto(filename, id, uploadedImage);
-		addPhoto(result);
 		return result;
 	}
 
