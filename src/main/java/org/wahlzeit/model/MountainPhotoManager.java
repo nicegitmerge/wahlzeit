@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.wahlzeit.model;
 
 import com.google.appengine.api.images.Image;
@@ -31,19 +28,7 @@ public class MountainPhotoManager extends PhotoManager {
 	/**
 	 *
 	 */
-	protected static final PhotoManager instance = new MountainPhotoManager();
-
 	private static final Logger log = Logger.getLogger(MountainPhotoManager.class.getName());
-
-	/**
-	 * In-memory cache for photos
-	 */
-	//protected Map<PhotoId, Photo> photoCache = new HashMap<PhotoId, Photo>();
-
-	/**
-	 *
-	 */
-	//protected PhotoTagCollector photoTagCollector = null;
 
 	/**
 	 *
@@ -53,7 +38,7 @@ public class MountainPhotoManager extends PhotoManager {
 	}
 
 	/**
-	 *
+	 * @methodtype get
 	 */
 	public Photo getPhotoFromId(PhotoId id) {
 		if (id == null) {
@@ -115,7 +100,7 @@ public class MountainPhotoManager extends PhotoManager {
 	}
 
 	/**
-	 *
+	 * query
 	 */
 	public Set<MountainPhoto> findMountainPhotosByOwner(String ownerName) {
 		Set<MountainPhoto> result = new HashSet<MountainPhoto>();
@@ -131,7 +116,7 @@ public class MountainPhotoManager extends PhotoManager {
 
 
 	/**
-	 *
+	 * @methodtype factory
 	 */
 	public Photo createPhoto(String filename, Image uploadedImage) throws Exception {
 		PhotoId id = PhotoId.getNextId();
