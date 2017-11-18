@@ -2,9 +2,9 @@ package org.wahlzeit.model;
 
 public class Location {
 	
-	public Coordinate coordinate;
+	public CartesianCoordinate coordinate;
 	
-	public Location(Coordinate c) throws IllegalArgumentException {
+	public Location(CartesianCoordinate c) throws IllegalArgumentException {
 		if (c == null) throw new IllegalArgumentException("Coordinate null");
 		coordinate = c;
 	}

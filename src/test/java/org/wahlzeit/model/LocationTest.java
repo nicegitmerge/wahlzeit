@@ -12,14 +12,14 @@ public class LocationTest {
 	
 	@Before
 	public void setUp() {
-		locOnes = new Location(new Coordinate(1, 1, 1));
-		locZeros = new Location(new Coordinate(0, 0, 0));
+		locOnes = new Location(new CartesianCoordinate(1, 1, 1));
+		locZeros = new Location(new CartesianCoordinate(0, 0, 0));
 	}
 
 	@Test
 	public void testLocation() {
-		assertTrue(locOnes.equals(new Location(new Coordinate(1,1,1))));
-		assertTrue(locZeros.equals(new Location(new Coordinate(0,0,0))));
+		assertTrue(locOnes.equals(new Location(new CartesianCoordinate(1,1,1))));
+		assertTrue(locZeros.equals(new Location(new CartesianCoordinate(0,0,0))));
 		assertFalse(locOnes.equals(locZeros));
 		assertFalse(locZeros.equals(null));
 	}
