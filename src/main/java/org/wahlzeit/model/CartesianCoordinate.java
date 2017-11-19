@@ -86,16 +86,16 @@ public class CartesianCoordinate implements Coordinate {
 	public SphericCoordinate asSphericCoordinate() {
 		double r = Math.sqrt(x*x + y*y + z*z);
 		double phi = (r < EPSILON ? Math.PI * 0.5d : Math.acos(z/r));
-		double thetap = (Math.abs(x) < EPSILON ? Math.PI * 0.5d : Math.atan(Math.abs(y/x)));
+		double theta_p = (Math.abs(x) < EPSILON ? Math.PI * 0.5d : Math.atan(Math.abs(y/x)));
 		double theta;
 		if (x > 0 && y >= 0) {//Q1
-			theta = thetap;
+			theta = theta_p;
 		} else if (x <= 0 && y >= 0) {//Q2
-			theta = Math.PI - thetap;
+			theta = Math.PI - theta_p;
 		} else if (x < 0 && y < 0) {//Q3
-			theta = Math.PI + thetap;
+			theta = Math.PI + theta_p;
 		} else {
-			theta = (2*Math.PI) - thetap;
+			theta = (2*Math.PI) - theta_p;
 		}
 		
 		double lon = Math.toDegrees(theta);

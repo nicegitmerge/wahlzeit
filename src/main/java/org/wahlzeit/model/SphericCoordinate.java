@@ -15,14 +15,7 @@ public class SphericCoordinate implements Coordinate {
 		if (longitude < -180.0d) {
 			longitude += 180;
 		}
-		/*
-		if (latitude > 90.0d) {
-			latitude -= 90;
-		}
-		if (latitude < -90.0d) {
-			latitude += 90;
-		}
-		*/
+
 		if (radius < 0) throw new IllegalArgumentException("radius < 0");
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -103,16 +96,6 @@ public class SphericCoordinate implements Coordinate {
 
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
-		/*
-		double r = radius;
-		double phi = Math.toRadians(-latitude + 90);
-		double theta = Math.toRadians(longitude + 180);
-		
-		double x = r*Math.sin(phi)*Math.cos(theta);
-		double y = r*Math.sin(phi)*Math.sin(theta);
-		double z = r*Math.cos(phi);
-		return new CartesianCoordinate(x, y, z);
-		*/
 		double r = radius;
 		double phi = Math.toRadians(-latitude + 90);
 		double theta = Math.toRadians(longitude);
