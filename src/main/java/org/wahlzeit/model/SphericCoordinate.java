@@ -30,35 +30,22 @@ public class SphericCoordinate implements Coordinate {
 
 	@Override
 	public double getCartesianDistance(Coordinate other) {
-		CartesianCoordinate a, b;
-		a = this.asCartesianCoordinate();
-		if (other instanceof SphericCoordinate) {
-			b = ((SphericCoordinate)other).asCartesianCoordinate();
-		} else {
-			b = (CartesianCoordinate)other;
-		}
-		return a.getCartesianDistance(b);
+		return this.asCartesianCoordinate().getCartesianDistance(other.asCartesianCoordinate());
 	}
 
 	@Override
 	public double getSphericDistance(Coordinate other) {
-		SphericCoordinate coord;
-		if (other instanceof SphericCoordinate) {
-			coord = (SphericCoordinate)other;
-		} else {
-			coord = ((CartesianCoordinate)other).asSphericCoordinate();
-		}
-		double phi1 = Math.toRadians(latitude);//(-latitude + 90);
-		double theta1 = Math.toRadians(longitude);//(longitude + 180);
-		double phi2 = Math.toRadians(coord.latitude);//(-coord.latitude + 90);
-		double theta2 = Math.toRadians(coord.longitude);//(coord.longitude + 180);
+		SphericCoordinate coord = other.asSphericCoordinate();
+		double phi1 = Math.toRadians(latitude);
+		double theta1 = Math.toRadians(longitude);
+		double phi2 = Math.toRadians(coord.latitude);
+		double theta2 = Math.toRadians(coord.longitude);
 		double dphi = Math.abs(phi1 - phi2);
 		double dtheta = Math.abs(theta1 - theta2);
 		
-		//double dsigma = Math.acos(Math.sin(phi1)*Math.sin(phi2) + Math.cos(phi1)*Math.cos(phi2)*Math.cos(dtheta));
 		double dsigma = 2 * Math.asin(Math.sqrt(
 				Math.sin(dphi*0.5)*Math.sin(dphi*0.5) + Math.cos(phi1)*Math.cos(phi2)*Math.sin(dtheta*0.5)*Math.sin(dtheta*0.5)
-		));//better conditioned formula
+		));
 		return radius * dsigma;
 	}
 
@@ -76,13 +63,7 @@ public class SphericCoordinate implements Coordinate {
 			return true;
 		}
 		
-		SphericCoordinate otherc;
-		if (!(other instanceof SphericCoordinate)) {
-			otherc = other.asSphericCoordinate();
-		} else {
-			otherc = (SphericCoordinate) other;
-		}
-		
+		SphericCoordinate otherc = other.asSphericCoordinate();
 		return (this.getSphericDistance(otherc) < EPSILON);
 	}
 	

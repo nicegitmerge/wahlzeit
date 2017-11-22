@@ -23,12 +23,7 @@ public class CartesianCoordinate implements Coordinate {
 		if (other == null) {
 			throw new IllegalArgumentException("Parameter null");
 		}
-		CartesianCoordinate coord;
-		if (other instanceof SphericCoordinate) {
-			coord = ((SphericCoordinate)other).asCartesianCoordinate();
-		} else {
-			coord = (CartesianCoordinate)other;
-		}
+		CartesianCoordinate coord = other.asCartesianCoordinate();
 		double dx = coord.x - x;
 		double dy = coord.y - y;
 		double dz = coord.z - z;
@@ -37,14 +32,7 @@ public class CartesianCoordinate implements Coordinate {
 	
 	@Override
 	public double getSphericDistance(Coordinate other) {
-		SphericCoordinate a, b;
-		a = this.asSphericCoordinate();
-		if (other instanceof CartesianCoordinate) {
-			b = ((CartesianCoordinate)other).asSphericCoordinate();
-		} else {
-			b = (SphericCoordinate)other;
-		}
-		return a.getSphericDistance(b);
+		return this.asSphericCoordinate().getSphericDistance(other.asSphericCoordinate());
 	}
 	
 	public double getDistance(Coordinate other) {
@@ -59,13 +47,7 @@ public class CartesianCoordinate implements Coordinate {
 			return true;
 		}
 		
-		CartesianCoordinate otherc;
-		if (!(other instanceof CartesianCoordinate)) {
-			otherc = other.asCartesianCoordinate();
-		} else {
-			otherc = (CartesianCoordinate) other;
-		}
-		
+		CartesianCoordinate otherc = other.asCartesianCoordinate();
 		return (getCartesianDistance(otherc) < EPSILON);
 	}
 	
