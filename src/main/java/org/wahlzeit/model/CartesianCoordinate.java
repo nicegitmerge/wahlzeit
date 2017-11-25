@@ -1,8 +1,6 @@
 package org.wahlzeit.model;
 
-public class CartesianCoordinate implements Coordinate {
-	
-	public static final double EPSILON = 1e-6;
+public class CartesianCoordinate extends AbstractCoordinate {
 	
 	private double x, y, z;
 	
@@ -13,16 +11,15 @@ public class CartesianCoordinate implements Coordinate {
 	}
 	
 	public CartesianCoordinate(CartesianCoordinate other) {
+		assertNotNull(other);
 		this.x = other.x;
 		this.y = other.y;
 		this.z = other.z;
 	}
 	
 	@Override
-	public double getCartesianDistance(Coordinate other) throws IllegalArgumentException {
-		if (other == null) {
-			throw new IllegalArgumentException("Parameter null");
-		}
+	public double getCartesianDistance(Coordinate other) {
+		assertNotNull(other);
 		CartesianCoordinate coord = other.asCartesianCoordinate();
 		double dx = coord.x - x;
 		double dy = coord.y - y;
@@ -32,31 +29,13 @@ public class CartesianCoordinate implements Coordinate {
 	
 	@Override
 	public double getSphericDistance(Coordinate other) {
+		assertNotNull(other);
 		return this.asSphericCoordinate().getSphericDistance(other.asSphericCoordinate());
 	}
 	
-	public double getDistance(Coordinate other) {
-		return getCartesianDistance(other);
-	}
-	
-	public boolean isEqual(Coordinate other) {
-		if (other == null) {
-			return false;
-		}
-		if (other == this) {
-			return true;
-		}
-		
+	protected boolean doIsEqual(Coordinate other) {
 		CartesianCoordinate otherc = other.asCartesianCoordinate();
 		return (getCartesianDistance(otherc) < EPSILON);
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) return false;
-		if (obj == this) return true;
-		if (!(obj instanceof Coordinate)) return false;
-		return isEqual((Coordinate)obj);
 	}
 
 	@Override
@@ -85,13 +64,12 @@ public class CartesianCoordinate implements Coordinate {
 		if (lon < -180) lon += 360;
 		double lat = -Math.toDegrees(phi) + 90;
 		
-		SphericCoordinate ret = new SphericCoordinate(lon, lat, r);
-		return ret;
+		return new SphericCoordinate(lon, lat, r);
 	}
 	
 	@Override
 	public String toString() {
-		return new String(""+x+", "+y+", "+z);
+		return new String("x "+x+", y "+y+", z "+z);
 	}
 
 }

@@ -1,9 +1,8 @@
 package org.wahlzeit.model;
 
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
 	
 	public static final double EARTH_RADIUS = 6371;
-	public static final double EPSILON = 1e-6;
 	
 	private double longitude, latitude, radius;
 	
@@ -15,14 +14,15 @@ public class SphericCoordinate implements Coordinate {
 		if (longitude < -180.0d) {
 			longitude += 180;
 		}
-
 		if (radius < 0) throw new IllegalArgumentException("radius < 0");
+		
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.radius = radius;
 	}
 	
 	public SphericCoordinate(SphericCoordinate other) {
+		assertNotNull(other);
 		this.longitude = other.longitude;
 		this.latitude = other.latitude;
 		this.radius = other.radius;
@@ -30,11 +30,13 @@ public class SphericCoordinate implements Coordinate {
 
 	@Override
 	public double getCartesianDistance(Coordinate other) {
+		assertNotNull(other);
 		return this.asCartesianCoordinate().getCartesianDistance(other.asCartesianCoordinate());
 	}
 
 	@Override
 	public double getSphericDistance(Coordinate other) {
+		assertNotNull(other);
 		SphericCoordinate coord = other.asSphericCoordinate();
 		double phi1 = Math.toRadians(latitude);
 		double theta1 = Math.toRadians(longitude);
@@ -48,31 +50,10 @@ public class SphericCoordinate implements Coordinate {
 		));
 		return radius * dsigma;
 	}
-
-	@Override
-	public double getDistance(Coordinate other) {
-		return getSphericDistance(other);
-	}
-
-	@Override
-	public boolean isEqual(Coordinate other) {
-		if (other == null) {
-			return false;
-		}
-		if (other == this) {
-			return true;
-		}
-		
+	
+	protected boolean doIsEqual(Coordinate other) {		
 		SphericCoordinate otherc = other.asSphericCoordinate();
 		return (this.getSphericDistance(otherc) < EPSILON);
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) return false;
-		if (obj == this) return true;
-		if (!(obj instanceof Coordinate)) return false;
-		return isEqual((Coordinate)obj);
 	}
 
 	@Override
@@ -93,7 +74,7 @@ public class SphericCoordinate implements Coordinate {
 	}
 	
 	public String toString() {
-		return new String(""+longitude+", "+latitude+", "+radius);
+		return new String("longitude "+longitude+", latitude "+latitude+", radius "+radius);
 	}
 
 }
