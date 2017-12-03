@@ -8,6 +8,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		assertClassInvariants(); // preconditions are the same as the class invariants
 	}
 	
 	public CartesianCoordinate(CartesianCoordinate other) {
@@ -15,31 +16,30 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		this.x = other.x;
 		this.y = other.y;
 		this.z = other.z;
+		assertClassInvariants();
 	}
 	
-	@Override
-	public double getCartesianDistance(Coordinate other) {
-		assertNotNull(other);
-		CartesianCoordinate coord = other.asCartesianCoordinate();
-		double dx = coord.x - x;
-		double dy = coord.y - y;
-		double dz = coord.z - z;
+	protected double doGetCartesianDistance(CartesianCoordinate other) {
+		double dx = other.x - x;
+		double dy = other.y - y;
+		double dz = other.z - z;
+		assertClassInvariants();
 		return Math.sqrt(dx*dx + dy*dy + dz*dz);
 	}
 	
-	@Override
-	public double getSphericDistance(Coordinate other) {
-		assertNotNull(other);
-		return this.asSphericCoordinate().getSphericDistance(other.asSphericCoordinate());
+	protected double doGetSphericDistance(SphericCoordinate other) {
+		return this.asSphericCoordinate().getSphericDistance(other);
 	}
 	
 	protected boolean doIsEqual(Coordinate other) {
 		CartesianCoordinate otherc = other.asCartesianCoordinate();
+		assertClassInvariants();
 		return (getCartesianDistance(otherc) < EPSILON);
 	}
 
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
+		assertClassInvariants();
 		return new CartesianCoordinate(this);
 	}
 
@@ -64,12 +64,36 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		if (lon < -180) lon += 360;
 		double lat = -Math.toDegrees(phi) + 90;
 		
+		assertClassInvariants();
 		return new SphericCoordinate(lon, lat, r);
 	}
 	
-	@Override
+	/**
+	 * @methodtype conversion
+	 */
 	public String toString() {
 		return new String("x "+x+", y "+y+", z "+z);
+	}
+	
+	/**
+	 * @methodtype assert
+	 */
+	protected void assertClassInvariants() {
+		assertDoubleVal(x);
+		assertDoubleVal(y);
+		assertDoubleVal(z);
+	}
+	
+	public double getX() {
+		return x;
+	}
+	
+	public double getY() {
+		return y;
+	}
+	
+	public double getZ() {
+		return z;
 	}
 
 }
