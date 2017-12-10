@@ -12,6 +12,7 @@ public interface Coordinate {
 	
 	/**
 	 * @methodtype get
+	 * @precondition argument not null
 	 */
 	public double getCartesianDistance(Coordinate other);
 	
@@ -22,11 +23,13 @@ public interface Coordinate {
 	
 	/**
 	 * @methodtype get
+	 * @precondition argument not null
 	 */
 	public double getSphericDistance(Coordinate other);
 	
 	/**
 	 * @methodtype get
+	 * @precondition argument not null
 	 */
 	public double getDistance(Coordinate other);
 	

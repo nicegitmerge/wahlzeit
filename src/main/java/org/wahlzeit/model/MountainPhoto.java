@@ -24,24 +24,30 @@ public class MountainPhoto extends Photo {
 	/**
 	 * @methodtype constructor
 	 */
-	public MountainPhoto(PhotoId myId) {
+	public MountainPhoto(PhotoId myId) throws IllegalArgumentCheckedException {
 		super(myId);
+		if (null == myId) throw new IllegalArgumentCheckedException("PhotoId null");
 	}
 	
 	/**
 	 * @methodtype constructor
+	 * sets heightm to 0 if negative
 	 */
 	public MountainPhoto(int heightm) {
 		super();
 		this.heightm = heightm;
+		if (heightm < 0) heightm = 0;
 	}
 	
 	/**
 	 * @methodtype constructor
+	 * sets heightm to 0 if negative
 	 */
-	public MountainPhoto(PhotoId myId, int heightm) {
+	public MountainPhoto(PhotoId myId, int heightm) throws IllegalArgumentCheckedException {
 		super(myId);
+		if (null == myId) throw new IllegalArgumentCheckedException("PhotoId null");
 		this.heightm = heightm;
+		if (heightm < 0) heightm = 0;
 	}
 	
 	/**
@@ -53,9 +59,11 @@ public class MountainPhoto extends Photo {
 	
 	/**
 	 * @methodtype set
+	 * sets heightm to 0 if negative
 	 */
 	public void setHeightm(int h) {
 		heightm = h;
+		if (heightm < 0) heightm = 0;
 	}
 
 }

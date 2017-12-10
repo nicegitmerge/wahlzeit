@@ -4,19 +4,40 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	
 	private double x, y, z;
 	
+	/**
+	 * initializes with 0 if invalid arguments
+	 */
 	public CartesianCoordinate(double x, double y, double z) {
+		init(x, y, z);
+		try {
+			assertClassInvariants();
+		} catch(IllegalStateException e) {
+			init(0, 0, 0);
+		}
+	}
+	
+	/**
+	 * initializes with 0 if invalid arguments
+	 */
+	public CartesianCoordinate(CartesianCoordinate other) {
+		try {
+			assertNotNull(other);
+		} catch(IllegalArgumentException e) {
+			init(0, 0, 0);
+			return;
+		}
+		init(other.x, other.y, other.z);
+		try {
+			assertClassInvariants();
+		} catch(IllegalStateException e) {
+			init(0, 0, 0);
+		}
+	}
+	
+	private void init(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		assertClassInvariants(); // preconditions are the same as the class invariants
-	}
-	
-	public CartesianCoordinate(CartesianCoordinate other) {
-		assertNotNull(other);
-		this.x = other.x;
-		this.y = other.y;
-		this.z = other.z;
-		assertClassInvariants();
 	}
 	
 	protected double doGetCartesianDistance(CartesianCoordinate other) {
@@ -78,7 +99,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype assert
 	 */
-	protected void assertClassInvariants() {
+	protected void assertClassInvariants() throws IllegalStateException {
 		assertDoubleVal(x);
 		assertDoubleVal(y);
 		assertDoubleVal(z);

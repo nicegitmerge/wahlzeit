@@ -11,21 +11,21 @@ public class LocationTest {
 	Location locZeros;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws IllegalArgumentCheckedException {
 		locOnes = new Location(new CartesianCoordinate(1, 1, 1));
 		locZeros = new Location(new CartesianCoordinate(0, 0, 0));
 	}
 
 	@Test
-	public void testLocation() {
+	public void testLocation() throws IllegalArgumentCheckedException {
 		assertTrue(locOnes.equals(new Location(new CartesianCoordinate(1,1,1))));
 		assertTrue(locZeros.equals(new Location(new CartesianCoordinate(0,0,0))));
 		assertFalse(locOnes.equals(locZeros));
 		assertFalse(locZeros.equals(null));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void testMethodsExpectIllegalArgumentException() {
+	@Test(expected = IllegalArgumentCheckedException.class)
+	public void testMethodsExpectIllegalArgumentException() throws IllegalArgumentCheckedException {
 		Location l = new Location(null);
 	}
 

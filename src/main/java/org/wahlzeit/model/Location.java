@@ -4,8 +4,8 @@ public class Location {
 	
 	public Coordinate coordinate;
 	
-	public Location(Coordinate c) throws IllegalArgumentException {
-		if (c == null) throw new IllegalArgumentException("Coordinate null");
+	public Location(Coordinate c) throws IllegalArgumentCheckedException {
+		if (c == null) throw new IllegalArgumentCheckedException();
 		coordinate = c;
 	}
 	

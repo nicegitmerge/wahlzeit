@@ -6,19 +6,40 @@ public class SphericCoordinate extends AbstractCoordinate {
 	
 	private double longitude, latitude, radius;
 	
-	public SphericCoordinate(double longitude, double latitude, double radius) throws IllegalArgumentException {
+	/**
+	 * initializes with 0 if invalid arguments
+	 */
+	public SphericCoordinate(double longitude, double latitude, double radius) {
+		init(longitude, latitude, radius);
+		try {
+			assertClassInvariants();
+		} catch(IllegalStateException e) {
+			init(0, 0, 0);
+		}
+	}
+	
+	/**
+	 * initializes with 0 if invalid arguments
+	 */
+	public SphericCoordinate(SphericCoordinate other) {
+		try {
+			assertNotNull(other);
+		} catch(IllegalArgumentException e) {
+			init(0, 0, 0);
+			return;
+		}
+		init(other.longitude, other.latitude, other.radius);
+		try {
+			assertClassInvariants();
+		} catch(IllegalStateException e) {
+			init(0, 0, 0);
+		}
+	}
+	
+	private void init(double longitude, double latitude, double radius) {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.radius = radius;
-		assertClassInvariants(); // preconditions are the same as the class invariants
-	}
-	
-	public SphericCoordinate(SphericCoordinate other) {
-		assertNotNull(other);
-		this.longitude = other.longitude;
-		this.latitude = other.latitude;
-		this.radius = other.radius;
-		assertClassInvariants();
 	}
 
 	protected double doGetCartesianDistance(CartesianCoordinate other) {
@@ -84,7 +105,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype assert
 	 */
-	protected void assertClassInvariants() {
+	protected void assertClassInvariants() throws IllegalStateException {
 		assertDoubleVal(latitude);
 		assertDoubleVal(longitude);
 		assertDoubleVal(radius);

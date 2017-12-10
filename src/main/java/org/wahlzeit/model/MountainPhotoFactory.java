@@ -49,10 +49,15 @@ public class MountainPhotoFactory extends PhotoFactory {
 	}
 	
 	/**
-	 * Creates a new photo with the specified id
+	 * Creates a new photo with the specified id 
 	 */
 	public MountainPhoto createPhoto(PhotoId id) {
-		return new MountainPhoto(id);
+		try {
+			return new MountainPhoto(id);
+		} catch (IllegalArgumentCheckedException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**
@@ -66,7 +71,12 @@ public class MountainPhotoFactory extends PhotoFactory {
 	 * Creates a new photo with the specified id
 	 */
 	public MountainPhoto createPhoto(PhotoId id, int heightm) {
-		return new MountainPhoto(id, heightm);
+		try {
+			return new MountainPhoto(id, heightm);
+		} catch (IllegalArgumentCheckedException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

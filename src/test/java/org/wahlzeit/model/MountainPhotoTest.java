@@ -36,7 +36,7 @@ public class MountainPhotoTest {
 		around(new RegisteredOfyEnvironmentProvider());
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws IllegalArgumentCheckedException {
 		factory = MountainPhotoFactory.getInstance();
 		manager = MountainPhotoManager.getInstance();
 		photo1 = new MountainPhoto();
