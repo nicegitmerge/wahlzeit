@@ -33,37 +33,29 @@ public abstract class AbstractCoordinate implements Coordinate {
 	
 	public double getCartesianDistance(Coordinate other) {
 		assertClassInvariants();
-		try {
-			assertNotNull(other);
-		} catch(IllegalArgumentException e) {
-			return 0;
-		}
+		assertNotNull(other);
 		return doGetCartesianDistance(other.asCartesianCoordinate());
 	}
 	
 	public double getSphericDistance(Coordinate other) {
 		assertClassInvariants();
-		try {
-			assertNotNull(other);
-		} catch(IllegalArgumentException e) {
-			return 0;
-		}
+		assertNotNull(other);
 		return doGetSphericDistance(other.asSphericCoordinate());
 	}
 	
 	/**
 	 * @methodtype assert
 	 */
-	protected void assertDoubleVal(double d) throws IllegalStateException {
-		if (d == Double.NaN) throw new IllegalStateException();
-		if (d == Double.NEGATIVE_INFINITY) throw new IllegalStateException();
-		if (d == Double.POSITIVE_INFINITY) throw new IllegalStateException();
+	protected void assertDoubleVal(double d) {
+		if (d == Double.NaN) throw new IllegalArgumentException();
+		if (d == Double.NEGATIVE_INFINITY) throw new IllegalArgumentException();
+		if (d == Double.POSITIVE_INFINITY) throw new IllegalArgumentException();
 	}
 	
 	/**
 	 * @methodtype assert
 	 */
-	protected void assertNotNull(Object o) throws IllegalArgumentException {
+	protected void assertNotNull(Object o) {
 		if (o == null) throw new IllegalArgumentException();
 	}
 	
@@ -79,5 +71,5 @@ public abstract class AbstractCoordinate implements Coordinate {
 	/**
 	 * @methodtype assert
 	 */
-	protected abstract void assertClassInvariants() throws IllegalStateException;
+	protected abstract void assertClassInvariants();
 }

@@ -6,34 +6,16 @@ public class SphericCoordinate extends AbstractCoordinate {
 	
 	private double longitude, latitude, radius;
 	
-	/**
-	 * initializes with 0 if invalid arguments
-	 */
 	public SphericCoordinate(double longitude, double latitude, double radius) {
 		init(longitude, latitude, radius);
-		try {
-			assertClassInvariants();
-		} catch(IllegalStateException e) {
-			init(0, 0, 0);
-		}
+		assertClassInvariants();
 	}
 	
-	/**
-	 * initializes with 0 if invalid arguments
-	 */
 	public SphericCoordinate(SphericCoordinate other) {
-		try {
-			assertNotNull(other);
-		} catch(IllegalArgumentException e) {
-			init(0, 0, 0);
-			return;
-		}
+		other.assertClassInvariants();
+		assertNotNull(other);
 		init(other.longitude, other.latitude, other.radius);
-		try {
-			assertClassInvariants();
-		} catch(IllegalStateException e) {
-			init(0, 0, 0);
-		}
+		assertClassInvariants();
 	}
 	
 	private void init(double longitude, double latitude, double radius) {
@@ -47,6 +29,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	}
 
 	protected double doGetSphericDistance(SphericCoordinate other) {
+		other.assertClassInvariants();
 		assertEqualRadius(radius, other.radius);
 		
 		double phi1 = Math.toRadians(latitude);
@@ -60,6 +43,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 				Math.sin(dphi*0.5)*Math.sin(dphi*0.5) + Math.cos(phi1)*Math.cos(phi2)*Math.sin(dtheta*0.5)*Math.sin(dtheta*0.5)
 		));
 		assertClassInvariants();
+		other.assertClassInvariants();
 		return radius * dsigma;
 	}
 
@@ -105,7 +89,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype assert
 	 */
-	protected void assertClassInvariants() throws IllegalStateException {
+	protected void assertClassInvariants() {
 		assertDoubleVal(latitude);
 		assertDoubleVal(longitude);
 		assertDoubleVal(radius);
