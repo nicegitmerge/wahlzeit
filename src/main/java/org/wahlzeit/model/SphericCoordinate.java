@@ -6,16 +6,26 @@ public class SphericCoordinate extends AbstractCoordinate {
 	
 	private double longitude, latitude, radius;
 	
-	public SphericCoordinate(double longitude, double latitude, double radius) {
+	private SphericCoordinate(double longitude, double latitude, double radius) {
 		init(longitude, latitude, radius);
 		assertClassInvariants();
 	}
 	
-	public SphericCoordinate(SphericCoordinate other) {
+	private SphericCoordinate(SphericCoordinate other) {
 		other.assertClassInvariants();
 		assertNotNull(other);
 		init(other.longitude, other.latitude, other.radius);
 		assertClassInvariants();
+	}
+	
+	public static SphericCoordinate getSphericCoordinate(double longitude, double latitude, double radius) {
+		SphericCoordinate c = new SphericCoordinate(longitude, latitude, radius);
+		Coordinate ret = allCoordinates.get(c.hashCode());
+		if (ret == null) {
+			allCoordinates.put(c.hashCode(), c);
+			return c;
+		}
+		return (SphericCoordinate)ret;
 	}
 	
 	private void init(double longitude, double latitude, double radius) {
@@ -63,7 +73,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		double y = r*Math.sin(phi)*Math.sin(theta);
 		double z = r*Math.cos(phi);
 		assertClassInvariants();
-		return new CartesianCoordinate(x, y, z);
+		return CartesianCoordinate.getCartesianCoordinate(x, y, z);
 	}
 
 	@Override

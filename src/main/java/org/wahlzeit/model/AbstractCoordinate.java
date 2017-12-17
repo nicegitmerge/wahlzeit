@@ -1,10 +1,20 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+
 public abstract class AbstractCoordinate implements Coordinate {
 	
 	public static final double EPSILON = 1e-6;
 	
+	/*
+	 * value object impl
+	 */
+	protected static HashMap<Integer, Coordinate> allCoordinates = new HashMap<>();
 	
+	
+	/**
+	 * @methodtype get
+	 */
 	public double getDistance(Coordinate other) {
 		return getCartesianDistance(other);
 	}
@@ -29,6 +39,11 @@ public abstract class AbstractCoordinate implements Coordinate {
 			return true;
 		}
 		return doIsEqual(other);
+	}
+	
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
 	}
 	
 	public double getCartesianDistance(Coordinate other) {

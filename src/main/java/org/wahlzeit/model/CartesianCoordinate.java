@@ -4,16 +4,26 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	
 	private double x, y, z;
 	
-	public CartesianCoordinate(double x, double y, double z) {
+	private CartesianCoordinate(double x, double y, double z) {
 		init(x, y, z);
 		assertClassInvariants();
 	}
 	
-	public CartesianCoordinate(CartesianCoordinate other) {
+	private CartesianCoordinate(CartesianCoordinate other) {
 		other.assertClassInvariants();
 		assertNotNull(other);
 		init(other.x, other.y, other.z);
 		assertClassInvariants();
+	}
+	
+	public static CartesianCoordinate getCartesianCoordinate(double x, double y, double z) {
+		CartesianCoordinate c = new CartesianCoordinate(x,y,z);
+		Coordinate ret = allCoordinates.get(c.hashCode());
+		if (ret == null) {
+			allCoordinates.put(c.hashCode(), c);
+			return c;
+		}
+		return (CartesianCoordinate)ret;
 	}
 	
 	private void init(double x, double y, double z) {
@@ -70,7 +80,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		double lat = -Math.toDegrees(phi) + 90;
 		
 		assertClassInvariants();
-		return new SphericCoordinate(lon, lat, r);
+		return SphericCoordinate.getSphericCoordinate(lon, lat, r);
 	}
 	
 	/**

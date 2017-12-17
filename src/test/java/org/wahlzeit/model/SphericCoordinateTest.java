@@ -13,27 +13,27 @@ public class SphericCoordinateTest {
 	@Before
 	public void setUp() throws Exception {
 		r = SphericCoordinate.EARTH_RADIUS;
-		a = new SphericCoordinate(0, 0, r);//equator, greenwich
-		b = new SphericCoordinate(0, 90, r);//north pole
-		c = new SphericCoordinate(180, 90, r);//north pole
-		d = new SphericCoordinate(90, 0, r);//equator
-		e = new SphericCoordinate(180, 0, r);//equator
-		f = new SphericCoordinate(123, -90, r);//south pole
+		a = SphericCoordinate.getSphericCoordinate(0, 0, r);//equator, greenwich
+		b = SphericCoordinate.getSphericCoordinate(0, 90, r);//north pole
+		c = SphericCoordinate.getSphericCoordinate(180, 90, r);//north pole
+		d = SphericCoordinate.getSphericCoordinate(90, 0, r);//equator
+		e = SphericCoordinate.getSphericCoordinate(180, 0, r);//equator
+		f = SphericCoordinate.getSphericCoordinate(123, -90, r);//south pole
 	}
 	
 	@Test
 	public void testIsEqual() {
 		assertTrue(b.isEqual(c));
-		assertTrue(e.isEqual(new SphericCoordinate(-180, 0, r)));
+		assertTrue(e.isEqual(SphericCoordinate.getSphericCoordinate(-180, 0, r)));
 	}
 
 	@Test
 	public void testAsCartesianCoordinate() {
-		assertTrue(new CartesianCoordinate(r, 0, 0).isEqual(a.asCartesianCoordinate()));
-		assertTrue(new CartesianCoordinate(0, 0, r).isEqual(b.asCartesianCoordinate()));
-		assertTrue(new CartesianCoordinate(0, 0, r).isEqual(c.asCartesianCoordinate()));
-		assertTrue(new CartesianCoordinate(0, r, 0).isEqual(d.asCartesianCoordinate()));
-		assertTrue(new CartesianCoordinate(-r, 0, 0).isEqual(e.asCartesianCoordinate()));
+		assertTrue(CartesianCoordinate.getCartesianCoordinate(r, 0, 0).isEqual(a.asCartesianCoordinate()));
+		assertTrue(CartesianCoordinate.getCartesianCoordinate(0, 0, r).isEqual(b.asCartesianCoordinate()));
+		assertTrue(CartesianCoordinate.getCartesianCoordinate(0, 0, r).isEqual(c.asCartesianCoordinate()));
+		assertTrue(CartesianCoordinate.getCartesianCoordinate(0, r, 0).isEqual(d.asCartesianCoordinate()));
+		assertTrue(CartesianCoordinate.getCartesianCoordinate(-r, 0, 0).isEqual(e.asCartesianCoordinate()));
 	}
 	
 	@Test
@@ -46,22 +46,22 @@ public class SphericCoordinateTest {
 	
 	@Test
 	public void testGetCartesianDistance() {
-		assertEquals(a.getCartesianDistance(new CartesianCoordinate(0, 0, 0)), r, 10.0d);
-		assertEquals(b.getCartesianDistance(new CartesianCoordinate(0, 0, 0)), r, 10.0d);
+		assertEquals(a.getCartesianDistance(CartesianCoordinate.getCartesianCoordinate(0, 0, 0)), r, 10.0d);
+		assertEquals(b.getCartesianDistance(CartesianCoordinate.getCartesianCoordinate(0, 0, 0)), r, 10.0d);
 		assertEquals(d.getCartesianDistance(e), Math.sqrt(2)*r, 10.0d);
 	}
 	
 	@Test
 	public void testSymmetricConversion() {
-		SphericCoordinate s = new SphericCoordinate(22, 43, r);
-		SphericCoordinate t = new SphericCoordinate(-180, -89, r);
+		SphericCoordinate s = SphericCoordinate.getSphericCoordinate(22, 43, r);
+		SphericCoordinate t = SphericCoordinate.getSphericCoordinate(-180, -89, r);
 		assertTrue(s.isEqual(s.asCartesianCoordinate().asSphericCoordinate()));
 		assertTrue(t.isEqual(t.asCartesianCoordinate().asSphericCoordinate()));
 	}
 	
 	@Test
 	public void testTypes() {
-		Coordinate s = new SphericCoordinate(22, 43, r);
+		Coordinate s = SphericCoordinate.getSphericCoordinate(22, 43, r);
 		Coordinate t = s.asCartesianCoordinate();
 		assertTrue(s.isEqual(t));
 		assertTrue(t.isEqual(s));
