@@ -2,6 +2,20 @@ package org.wahlzeit.model;
 
 import java.util.HashMap;
 
+import org.wahlzeit.annotations.PatternInstance;
+
+@PatternInstance(
+		patternName = "Template Method",
+		participants = {
+				"AbstractCoordinate", "CartesianCoordinate", "SphericCoordinate"
+		}
+	)
+@PatternInstance(
+		patternName = "Flyweight",
+		participants = {
+				"AbstractCoordinate", "CartesianCoordinate", "SphericCoordinate"
+		}
+	)
 public abstract class AbstractCoordinate implements Coordinate {
 	
 	public static final double EPSILON = 1e-6;

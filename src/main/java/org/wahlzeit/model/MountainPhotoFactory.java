@@ -2,6 +2,7 @@ package org.wahlzeit.model;
 
 import java.util.logging.Logger;
 
+import org.wahlzeit.annotations.PatternInstance;
 import org.wahlzeit.services.LogBuilder;
 
 public class MountainPhotoFactory extends PhotoFactory {

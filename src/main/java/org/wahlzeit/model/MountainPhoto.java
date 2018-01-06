@@ -1,5 +1,6 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.annotations.PatternInstance;
 import org.wahlzeit.model.Photo;
 
 import com.googlecode.objectify.annotation.Entity;
