@@ -50,16 +50,8 @@ public class MountainPhotoTest {
 		PhotoId id = new PhotoId(1);
 		Photo mp1 = factory.createPhoto();
 		Photo mp2 = factory.createPhoto(id);
-		Photo mp3 = ((MountainPhotoFactory)factory).createPhoto(8000);
-		Photo mp4 = ((MountainPhotoFactory)factory).createPhoto(id, 8000);
 		assertNotEquals(null, mp1);
 		assertNotEquals(null, mp2);
-		assertNotEquals(null, mp3);
-		assertNotEquals(null, mp4);
-		assertEquals(((MountainPhoto)mp3).getHeightm(), 8000);
-		assertEquals(((MountainPhoto)mp4).getHeightm(), 8000);
-		((MountainPhoto)mp3).setHeightm(3000);
-		assertEquals(((MountainPhoto)mp3).getHeightm(), 3000);
 	}
 	
 	@Test

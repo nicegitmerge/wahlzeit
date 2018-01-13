@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import java.util.Date;
+
 import org.wahlzeit.annotations.PatternInstance;
 import org.wahlzeit.model.Photo;
 
@@ -13,7 +15,15 @@ import com.googlecode.objectify.annotation.Subclass;
 @Entity
 public class MountainPhoto extends Photo {
 	
-	private int heightm; //meters
+	private Mountain mountain = null;
+
+	public Mountain getMountain() {
+		return mountain;
+	}
+
+	public void setMountain(Mountain mountain) {
+		this.mountain = mountain;
+	}
 
 	/**
 	 * @methodtype constructor
@@ -33,36 +43,23 @@ public class MountainPhoto extends Photo {
 	/**
 	 * @methodtype constructor
 	 */
-	public MountainPhoto(int heightm) {
+	public MountainPhoto(Mountain m) {
 		super();
-		if (heightm < 0) throw new IllegalArgumentException("heightm < 0");
-		this.heightm = heightm;
+		if (m == null) {
+			throw new IllegalArgumentException();
+		}
+		mountain = m;
 	}
 	
 	/**
 	 * @methodtype constructor
 	 */
-	public MountainPhoto(PhotoId myId, int heightm) {
+	public MountainPhoto(PhotoId myId, Mountain m) {
 		super(myId);
 		if (null == myId) throw new IllegalArgumentException("PhotoId null");
-		if (heightm < 0) throw new IllegalArgumentException("heightm < 0");
-		this.heightm = heightm;
-	}
-	
-	/**
-	 * @methodtype get
-	 */
-	public int getHeightm() {
-		return heightm;
-	}
-	
-	/**
-	 * @methodtype set
-	 * sets heightm to 0 if negative
-	 */
-	public void setHeightm(int heightm) {
-		if (heightm < 0) throw new IllegalArgumentException("heightm < 0");
-		this.heightm = heightm;
+		if (m == null) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 }
