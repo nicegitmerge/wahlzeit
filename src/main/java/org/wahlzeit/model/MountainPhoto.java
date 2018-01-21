@@ -1,12 +1,10 @@
 package org.wahlzeit.model;
 
-import java.util.Date;
-
-import org.wahlzeit.annotations.PatternInstance;
 import org.wahlzeit.model.Photo;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Subclass;
+import com.googlecode.objectify.annotation.Serialize;
 
 /**
  *
@@ -15,6 +13,7 @@ import com.googlecode.objectify.annotation.Subclass;
 @Entity
 public class MountainPhoto extends Photo {
 	
+	@Serialize
 	private Mountain mountain = null;
 
 	public Mountain getMountain() {
@@ -46,7 +45,7 @@ public class MountainPhoto extends Photo {
 	public MountainPhoto(Mountain m) {
 		super();
 		if (m == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("argument null");
 		}
 		mountain = m;
 	}

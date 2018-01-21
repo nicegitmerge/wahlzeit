@@ -17,7 +17,7 @@ public class Mountain {
 	
 	public void setLocation(Location loc) {
 		if (loc == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("argument null");
 		}
 		location = loc;
 	}

@@ -8,13 +8,17 @@ public class MountainType {
 	
 	protected HashSet<MountainType> subTypes = new HashSet<>();
 	
+	protected HashSet<Mountain> instances = new HashSet<>();
+	
 	
 	protected MountainType(String type) {
 		this.type = type;
 	}
 	
 	public Mountain createInstance() {
-		return new Mountain(this);
+		Mountain m = new Mountain(this);
+		instances.add(m);
+		return m;
 	}
 	
 	public String getType() {
@@ -24,7 +28,7 @@ public class MountainType {
 	
 	public void addSubType(MountainType mt) {
 		if (mt == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("argument null");
 		}
 		subTypes.add(mt);
 	}

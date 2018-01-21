@@ -21,7 +21,7 @@ public class MountainTest {
 	}
 
 	@Test
-	public void testLocation() throws IllegalArgumentCheckedException {
+	public void testMountain() throws IllegalArgumentCheckedException {
 		tallMountain1 = manager.createMountain("Tall");
 		tallMountain2 = manager.createMountain("Tall");
 		smallMountain1 = manager.createMountain("Small");
